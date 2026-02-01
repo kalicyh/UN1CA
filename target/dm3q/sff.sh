@@ -1,0 +1,43 @@
+#
+# Copyright (C) 2025 Salvo Giangreco
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+# SEC Floating Feature configuration file for Galaxy S23 Ultra (dm3q)
+
+# Camera
+SEC_FLOATING_FEATURE_CAMERA_CONFIG_CAMID_TELE2=54
+SEC_FLOATING_FEATURE_CAMERA_CONFIG_NIGHT_FRONT_DISPLAY_FLASH_TRANSPARENT=65
+SEC_FLOATING_FEATURE_CAMERA_CONFIG_UW_DISTORTION_CORRECTION=0,109,2,22011703,4000,3000,1,0,60,0
+SEC_FLOATING_FEATURE_CAMERA_CONFIG_WIDE_DISTORTION_CORRECTION=0,109,2,22011703,4000,3000,0,150,60,0
+
+# Display
+SEC_FLOATING_FEATURE_LCD_CONFIG_AOD_REFRESH_RATE=1
+
+# S Pen
+SEC_FLOATING_FEATURE_COMMON_CONFIG_BLE_SPEN_SPEC=builtin,button,airmotion
+SEC_FLOATING_FEATURE_COMMON_CONFIG_SPEN_SENSITIVITY_ADJUSTMENT=700
+SEC_FLOATING_FEATURE_COMMON_SUPPORT_BLE_SPEN=TRUE
+SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_SPEN_GARAGE_SPEC=type=insert, bundled=true, unbundled_spec=remote
+SEC_FLOATING_FEATURE_FRAMEWORK_CONFIG_SPEN_VERSION=60
+
+# Lockscreen
+SEC_FLOATING_FEATURE_LOCKSCREEN_CONFIG_PUNCHHOLE_VI=face,type:circle
+
+# Device specific
+SEC_FLOATING_FEATURE_SETTINGS_CONFIG_BRAND_NAME=Galaxy S23 Ultra
+SEC_FLOATING_FEATURE_SETTINGS_CONFIG_ELECTRIC_RATED_VALUE=DC 10 V; 4.5 A
+SEC_FLOATING_FEATURE_SETTINGS_CONFIG_FCC_ID=A3LSMS918B
+SEC_FLOATING_FEATURE_SETTINGS_CONFIG_SPEN_FCC_ID=A3LEJPS918
