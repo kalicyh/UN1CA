@@ -2,8 +2,6 @@ name: Update prebuilt blobs
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 12 * * *"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -12,35 +10,43 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-24.04
+    env:
+      S918N_IMEI: ${{ vars.S918N_IMEI }}
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - module: "Galaxy S23 (dm1qxxx)"
-            device: "dm1qxxx"
-            firmware: "SM-S911B/EUX/352404911234563"
-          - module: "Galaxy S23 China (dm1qcxx)"
-            device: "dm1qcxx"
-            firmware: "SM-S9110/TGY/RFCW2198XNF"
-          - module: "Galaxy S23+ China (dm2qcxx)"
-            device: "dm2qcxx"
-            firmware: "SM-S9160/TGY/R5CW22FT58F"
+          # - module: "Galaxy S23 (dm1qxxx)"
+          #   device: "dm1qxxx"
+          #   firmware: "SM-S911B/EUX/352404911234563"
+          # - module: "Galaxy S23 China (dm1qcxx)"
+          #   device: "dm1qcxx"
+          #   firmware: "SM-S9110/TGY/RFCW2198XNF"
+          # - module: "Galaxy S23+ China (dm2qcxx)"
+          #   device: "dm2qcxx"
+          #   firmware: "SM-S9160/TGY/R5CW22FT58F"
           - module: "Galaxy S23 Ultra China (dm3qcxx)"
             device: "dm3qcxx"
             firmware: "SM-S9180/TGY/R5CW613B3ME"
-          - module: "Galaxy S25+ (pa2qxxx)"
-            device: "pa2qxxx"
-            firmware: "SM-S936B/EUX/350634601234562"
-          - module: "Galaxy S21 FE 5G (Snapdragon) (r9qxxx)"
-            device: "r9qxxx"
-            firmware: "SM-G990B/EUX/353718681234563"
-          - module: "Galaxy S21 FE 5G (Exynos) (r9sxxx)"
-            device: "r9sxxx"
-            firmware: "SM-G990E/THL/355798871234563"
-          - module: "Galaxy S23 FE (r11sxxx)"
-            device: "r11sxxx"
-            firmware: "SM-S711B/EUX/358615311234564"
+          - module: "Galaxy S23 Ultra Korea (dm3qkxx)"
+            device: "dm3qkxx"
+            firmware: "SM-S918N/KOO/ENV"
+          - module: "Galaxy S25 Ultra China (pa3qxxx)"
+            device: "pa3qxxx"
+            firmware: "SM-S9380/CHC/355534491000674"
+          # - module: "Galaxy S25+ (pa2qxxx)"
+          #   device: "pa2qxxx"
+          #   firmware: "SM-S936B/EUX/350634601234562"
+          # - module: "Galaxy S21 FE 5G (Snapdragon) (r9qxxx)"
+          #   device: "r9qxxx"
+          #   firmware: "SM-G990B/EUX/353718681234563"
+          # - module: "Galaxy S21 FE 5G (Exynos) (r9sxxx)"
+          #   device: "r9sxxx"
+          #   firmware: "SM-G990E/THL/355798871234563"
+          # - module: "Galaxy S23 FE (r11sxxx)"
+          #   device: "r11sxxx"
+          #   firmware: "SM-S711B/EUX/358615311234564"
 
     steps:
       - name: Checkout repo
@@ -92,7 +98,15 @@ jobs:
       - name: Update prebuilt blobs
         run: |
           source ./buildenv.sh a52sxq
-          ./scripts/internal/update_prebuilt_blobs.sh "${{ matrix.device }}" "${{ matrix.firmware }}"
+          FIRMWARE="${{ matrix.firmware }}"
+          if [ "${{ matrix.device }}" = "dm3qkxx" ]; then
+            if [ -z "$S918N_IMEI" ]; then
+              echo "S918N_IMEI is not set" >&2
+              exit 1
+            fi
+            FIRMWARE="SM-S918N/KOO/${S918N_IMEI}"
+          fi
+          ./scripts/internal/update_prebuilt_blobs.sh "${{ matrix.device }}" "$FIRMWARE"
           echo "PDA_BUILD=$(cat "./prebuilts/samsung/${{ matrix.device }}/.current" | cut -d "/" -f "1")" >> "$GITHUB_ENV"
 
       - name: Create Pull Request
