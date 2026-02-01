@@ -101,10 +101,10 @@ jobs:
           FIRMWARE="${{ matrix.firmware }}"
           if [ "${{ matrix.device }}" = "dm3qkxx" ]; then
             if [ -z "$S918N_IMEI" ]; then
-              echo "S918N_IMEI is not set" >&2
-              exit 1
+              echo "S918N_IMEI is not set, fallback to matrix firmware" >&2
+            else
+              FIRMWARE="SM-S918N/KOO/${S918N_IMEI}"
             fi
-            FIRMWARE="SM-S918N/KOO/${S918N_IMEI}"
           fi
           ./scripts/internal/update_prebuilt_blobs.sh "${{ matrix.device }}" "$FIRMWARE"
           echo "PDA_BUILD=$(cat "./prebuilts/samsung/${{ matrix.device }}/.current" | cut -d "/" -f "1")" >> "$GITHUB_ENV"
