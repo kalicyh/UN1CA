@@ -11,7 +11,7 @@ jobs:
   update:
     runs-on: ubuntu-24.04
     env:
-      S918N_IMEI: ${{ vars.S918N_IMEI }}
+      S918N_IMEI: ${{ secrets.S918N_IMEI }}
 
     steps:
       - name: Checkout repo
