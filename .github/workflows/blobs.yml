@@ -93,6 +93,9 @@ jobs:
       - name: Update prebuilt blobs
         run: |
           source ./buildenv.sh a52sxq
+          if [ ! -d "./prebuilts/samsung/${{ matrix.device }}" ]; then
+            mkdir -p "./prebuilts/samsung/${{ matrix.device }}"
+          fi
           ./scripts/internal/update_prebuilt_blobs.sh "${{ matrix.device }}" "${{ matrix.firmware }}"
           echo "PDA_BUILD=$(cat "./prebuilts/samsung/${{ matrix.device }}/.current" | cut -d "/" -f "1")" >> "$GITHUB_ENV"
 

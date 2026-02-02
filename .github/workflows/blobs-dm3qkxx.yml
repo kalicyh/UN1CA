@@ -65,7 +65,11 @@ jobs:
           source ./buildenv.sh a52sxq
           FIRMWARE="SM-S918N/KOO/ENV"
           if [ ! -d "./prebuilts/samsung/dm3qkxx" ]; then
-            cp -a "./prebuilts/samsung/dm3qcxx" "./prebuilts/samsung/dm3qkxx"
+            if [ -d "./prebuilts/samsung/dm3qcxx" ]; then
+              cp -a "./prebuilts/samsung/dm3qcxx" "./prebuilts/samsung/dm3qkxx"
+            else
+              mkdir -p "./prebuilts/samsung/dm3qkxx"
+            fi
           fi
           if [ -z "$S918N_IMEI" ]; then
             echo "S918N_IMEI is not set, fallback to matrix firmware" >&2
